@@ -22,7 +22,7 @@ public class ArgsParser {
     addParam(
         "[search]",
         "an optional parameter denoting which search to use "
-            + "(e.g., \"IteratedPatternSearch\", \"GeometricSearch\" or \"LatticeSearch\")");
+            + "(e.g., \"IteratedPatternSearch\", \"GeometricSearch\" or \"LatticeSearch\" or \"HillClimbingSearch\")");
   }
 
   public void addParam(String name, String description) {
