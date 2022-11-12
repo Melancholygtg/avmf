@@ -7,26 +7,20 @@ import java.util.*;
 
 public class HillClimbingSearch extends LocalSearch {
 
-    //Initial parameters
-    private ObjectiveValue currentVal;
     private ObjectiveValue neighborVal;
-    // The program becomes the most efficiency when the iterative times is 1000 by testing
-    private int Max_Count = 1000;
+    private ObjectiveValue currentVal;
 
     public HillClimbingSearch() {}
 
     protected void performSearch() throws TerminationException {
 
-        boolean still_searching = true;
+        boolean continue_searching = true;
         int bestVal = var.getValue();
-
-        while (still_searching) {
+        while (continue_searching) {
             //Construct  a Vector to store generated data from getNeighbors() function
             Vector<Integer> neighbors = getNeighbors(var.getValue());
-            still_searching = false;
-
+            continue_searching = false;
             currentVal = objFun.evaluate(vector);
-
             for (Integer neighborNumber : neighbors) {
                 var.setValue(neighborNumber);
                 neighborVal = objFun.evaluate(vector);
@@ -34,29 +28,31 @@ public class HillClimbingSearch extends LocalSearch {
                 //Update the best solution and keep searching better solution
                 if (neighborVal.betterThan(currentVal)) {
                     currentVal = neighborVal;
-                    still_searching = true;
+                    continue_searching = true;
                     bestVal = neighborNumber;
                 }
             }
             //Stop searching when the iterative finishes and return the best result
-            if (!still_searching) {
+            if (!continue_searching) {
                 var.setValue(bestVal);
                 break;
             }
         }
     }
 
-    private Vector<Integer> getNeighbors(int currentVal) {
-        Vector<Integer> neighbors = new Vector();
-        //Enter the iterative process
-        for (int i = 0; i < Max_Count; i++) {
-            //generate a new solution
-            int neighborVal = (int) ((currentVal / 2) + (currentVal * Math.random()));
-            //Update the solution
-            if (!neighbors.contains(neighborVal)) {
-                neighbors.addElement(neighborVal);
+    private Vector<Integer> getNeighbors(int current) {
+        Vector<Integer> neighbors = new Vector<Integer>();
+        //Enter the iterative process.
+        //The program becomes the most efficiency when the iterative times is 1000 by testing
+        for (int i = 0; i < 1000; i++) {
+            //get a new neighbor
+            int neighbor = (int) ((current) * Math.random()+(current) / 2);
+            //add the neighbor to the list if not in the list
+            if (!neighbors.contains(neighbor)) {
+                neighbors.addElement(neighbor);
             }
         }
+        //return all neighbors found!
         return neighbors;
     }
 }
